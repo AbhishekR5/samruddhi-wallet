@@ -1,0 +1,2717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samruddhi Groups - Wallet Management</title>
+
+<style>
+/* =========================================================
+   SAMRUDDHI GROUPS - COMPLETE SINGLE FILE DEMO
+   ========================================================= */
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --green:#083f35;
+  --green2:#0b5c49;
+  --green3:#24775f;
+  --cream:#fbf8ee;
+  --cream2:#f3eddd;
+  --gold:#bd8b2d;
+  --gold2:#e6c16d;
+  --blue:#e7f3f4;
+  --lightgreen:#edf5e8;
+  --lightgold:#fbf0d6;
+  --text:#163d35;
+  --muted:#72807a;
+  --border:#ddd7c4;
+  --white:#fff;
+  --red:#a54b4b;
+  --shadow:0 12px 40px rgba(26,56,45,.09);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:#f3f0e7;
+  color:var(--text);
+}
+
+button,input,select{font:inherit}
+
+button{cursor:pointer}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.hidden{display:none!important}
+
+/* APP */
+
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:245px 1fr;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  background:linear-gradient(180deg,#073d34,#052e28);
+  color:white;
+  min-height:100vh;
+  padding:28px 18px;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:0 8px;
+  margin-bottom:38px;
+}
+
+.logo-icon{
+  width:44px;height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Georgia,serif;
+  font-size:25px;
+  font-weight:bold;
+  color:var(--green);
+  background:linear-gradient(135deg,#d0a143,#f4dc99);
+}
+
+.logo h2{
+  font-family:Georgia,serif;
+  font-size:21px;
+}
+
+.logo small{color:#c7d5d1}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#d6e3df;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 14px;
+  border-radius:13px;
+  text-align:left;
+}
+
+.nav-btn:hover,.nav-btn.active{
+  background:rgba(255,255,255,.12);
+  color:white;
+}
+
+.nav-icon{
+  width:27px;
+  font-size:19px;
+  text-align:center;
+}
+
+.support{
+  position:absolute;
+  bottom:25px;
+  left:18px;
+  right:18px;
+  background:rgba(255,255,255,.08);
+  padding:16px;
+  border-radius:14px;
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* MAIN */
+
+.main{
+  min-width:0;
+  padding:30px;
+  max-width:1500px;
+  width:100%;
+  margin:auto;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:26px;
+}
+
+.greeting small{color:var(--muted);font-size:15px}
+
+.greeting h1{
+  font-family:Georgia,serif;
+  font-size:34px;
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.icon-btn{
+  width:45px;height:45px;
+  border-radius:50%;
+  background:white;
+  border:1px solid var(--border);
+  color:var(--green);
+  font-size:18px;
+}
+
+.avatar{
+  width:48px;height:48px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  background:#fffaf0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:19px;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid #d1d9c5;
+  background:
+    radial-gradient(circle at 90% 30%,rgba(255,255,255,.8),transparent 18%),
+    linear-gradient(110deg,#eef6e9,#f9f6e8);
+  padding:30px;
+  box-shadow:var(--shadow);
+}
+
+.hero:after{
+  content:"₹";
+  position:absolute;
+  right:50px;
+  top:-35px;
+  font:220px Georgia,serif;
+  color:rgba(10,79,64,.055);
+}
+
+.hero>*{position:relative;z-index:1}
+
+.eyebrow{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+.hero h2{
+  font:700 49px Georgia,serif;
+  color:var(--green);
+}
+
+.positive{
+  color:#24805f;
+  margin-top:7px;
+  font-weight:700;
+}
+
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:999px;
+  padding:12px 19px;
+  font-weight:600;
+  transition:.2s;
+}
+
+.btn:hover{transform:translateY(-1px)}
+
+.btn-primary{
+  background:var(--green);
+  color:white;
+}
+
+.btn-secondary{
+  color:var(--green);
+  background:white;
+  border:1px solid var(--green);
+}
+
+.btn-gold{
+  background:var(--gold);
+  color:white;
+}
+
+.btn-soft{
+  color:var(--green);
+  background:#edf4e9;
+}
+
+.btn-danger{
+  background:#fff0ee;
+  color:#9d4742;
+}
+
+.full{width:100%}
+
+/* TITLES */
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin:28px 0 15px;
+}
+
+.section-head h2{
+  font:700 23px Georgia,serif;
+}
+
+.section-head p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.text-btn{
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-weight:600;
+}
+
+/* MONEY CARDS */
+
+.money-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.money-card{
+  border-radius:20px;
+  border:1px solid var(--border);
+  padding:23px;
+  min-height:230px;
+}
+
+.wallet-card{background:linear-gradient(145deg,#eaf4e6,#fbfaef)}
+.deposit-card{background:linear-gradient(145deg,#e6f3f4,#fbfcf9)}
+.earning-card{background:linear-gradient(145deg,#fbefd7,#fffaf0)}
+
+.circle-icon{
+  width:54px;height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.75);
+  font-size:26px;
+  margin-bottom:16px;
+}
+
+.money-card h3{font-size:17px}
+
+.big-amount{
+  font:700 32px Georgia,serif;
+  margin:7px 0;
+}
+
+.desc{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  min-height:39px;
+}
+
+.card-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+
+/* JOURNEY */
+
+.panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.journey{
+  background:var(--cream);
+}
+
+.steps{
+  display:grid;
+  grid-template-columns:1fr 42px 1fr 42px 1fr 42px 1fr;
+  align-items:start;
+  margin-top:24px;
+}
+
+.step{text-align:center}
+
+.step-icon{
+  width:68px;height:68px;
+  border-radius:50%;
+  background:#e6f0e2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  margin:0 auto 11px;
+}
+
+.step h4{font-size:14px;margin-bottom:5px}
+.step strong{font-size:14px}
+.step p{
+  max-width:160px;
+  margin:5px auto 0;
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.arrow{
+  padding-top:23px;
+  text-align:center;
+  font-size:24px;
+  color:var(--green);
+}
+
+/* QUICK STRIP */
+
+.quick-strip{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(90deg,#edf5e8,#faf6e7);
+  border:1px solid #d5ddc8;
+  border-radius:17px;
+  padding:19px;
+}
+
+.quick-info{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.upi{
+  width:57px;height:57px;
+  border-radius:13px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+.quick-info p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* DASH GRID */
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.45fr .8fr;
+  gap:20px;
+  margin-top:22px;
+}
+
+.transaction-list{margin-top:10px}
+
+.transaction-item{
+  display:grid;
+  grid-template-columns:43px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:14px 5px;
+  border-bottom:1px solid #eeece5;
+  cursor:pointer;
+  border-radius:10px;
+}
+
+.transaction-item:hover{background:#faf9f4}
+.transaction-item:last-child{border-bottom:0}
+
+.tx-icon{
+  width:41px;height:41px;
+  border-radius:50%;
+  background:#edf4e9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.tx-title{font-size:13px;font-weight:700}
+.tx-meta{font-size:10px;color:var(--muted);margin-top:4px}
+.tx-amount{text-align:right;font-weight:700;font-size:13px}
+.credit{color:#1f805d}
+.debit{color:#9c5a42}
+.tx-status{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:400;
+  margin-top:3px;
+}
+
+/* SUMMARY */
+
+.summary-card{
+  background:linear-gradient(145deg,#edf5e8,#fff9e8);
+}
+
+.summary-card .big-amount{
+  font-size:35px;
+}
+
+.progress{
+  height:9px;
+  background:#e0e1d6;
+  border-radius:20px;
+  overflow:hidden;
+  margin:18px 0 8px;
+}
+
+.progress-fill{
+  height:100%;
+  background:var(--green);
+  width:20%;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin:18px 0;
+}
+
+.stat{
+  padding:13px;
+  border-radius:12px;
+  background:rgba(255,255,255,.72);
+}
+
+.stat small{color:var(--muted);font-size:10px}
+.stat strong{display:block;margin-top:5px;font-size:13px}
+
+/* OFFERS */
+
+.offer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.offer-card{
+  position:relative;
+  overflow:hidden;
+  min-height:235px;
+  border-radius:20px;
+  padding:22px;
+  border:1px solid var(--border);
+}
+
+.offer-card.blue{background:linear-gradient(135deg,#dff1f3,#f6fbf8)}
+.offer-card.green{background:linear-gradient(135deg,#eaf3dd,#f9f8e7)}
+.offer-card.gold{background:linear-gradient(135deg,#fff0cf,#fff9ed)}
+
+.badge{
+  display:inline-block;
+  border-radius:20px;
+  background:rgba(8,63,53,.1);
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.offer-card h3{
+  font:700 27px Georgia,serif;
+  max-width:220px;
+  margin-bottom:9px;
+}
+
+.offer-card p{
+  max-width:220px;
+  color:#5e6d67;
+  font-size:11px;
+  line-height:1.5;
+  margin-bottom:18px;
+}
+
+.offer-art{
+  position:absolute;
+  right:17px;
+  bottom:12px;
+  font-size:62px;
+  opacity:.75;
+}
+
+/* PAGE HEADER */
+
+.page-header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.back{
+  width:42px;height:42px;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:white;
+  color:var(--green);
+  font-size:20px;
+}
+
+.page-header h1{
+  font:700 30px Georgia,serif;
+}
+
+.page-header p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+/* TRANSACTION PAGE */
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:15px 0 20px;
+}
+
+.filter-btn{
+  padding:9px 14px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--green);
+}
+
+.filter-btn.active{
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+/* EARNINGS */
+
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.metric{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:18px;
+  padding:21px;
+}
+
+.metric.highlight{
+  background:linear-gradient(135deg,#eef5e7,#fff5da);
+}
+
+.metric small{color:var(--muted)}
+.metric h3{
+  font:700 29px Georgia,serif;
+  margin-top:7px;
+}
+
+/* PROFILE */
+
+.profile-card{
+  text-align:center;
+  padding:30px;
+}
+
+.large-avatar{
+  width:90px;height:90px;
+  margin:auto;
+  border-radius:50%;
+  background:#f4edda;
+  border:1px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font:700 34px Georgia,serif;
+}
+
+.profile-card h2{
+  font:700 27px Georgia,serif;
+  margin-top:13px;
+}
+
+.verified{
+  display:inline-block;
+  background:#e9f5e9;
+  color:#24775f;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:10px;
+  margin-top:7px;
+}
+
+.settings-list{margin-top:18px}
+
+.setting{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:17px 5px;
+  border-bottom:1px solid #eeeae0;
+}
+
+.setting:last-child{border:0}
+
+/* MODAL */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,35,29,.55);
+  z-index:500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  backdrop-filter:blur(3px);
+}
+
+.modal{
+  width:min(500px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fffdf7;
+  border-radius:24px;
+  box-shadow:0 25px 80px rgba(0,0,0,.2);
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:21px 22px;
+  border-bottom:1px solid #eae5d9;
+}
+
+.modal-header h2{
+  font:700 23px Georgia,serif;
+}
+
+.close{
+  width:36px;height:36px;
+  border-radius:50%;
+  border:0;
+  background:#f0eee7;
+  font-size:18px;
+}
+
+.modal-body{padding:22px}
+
+.balance-box{
+  padding:17px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#edf5e8,#faf5df);
+  margin-bottom:20px;
+}
+
+.balance-box small{color:var(--muted)}
+.balance-box strong{
+  display:block;
+  font:700 28px Georgia,serif;
+  margin-top:5px;
+}
+
+.form-group{margin-bottom:17px}
+
+.form-group label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.input-wrap{
+  display:flex;
+  align-items:center;
+  border:1px solid #d9d5c9;
+  background:white;
+  border-radius:13px;
+  overflow:hidden;
+}
+
+.input-wrap span{
+  padding-left:14px;
+  font-weight:bold;
+}
+
+.input-wrap input{
+  width:100%;
+  padding:14px 12px;
+  border:0;
+  outline:0;
+  background:transparent;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #d9d5c9;
+  background:white;
+  outline:none;
+}
+
+.quick-amounts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:8px;
+}
+
+.quick-amounts button{
+  border:1px solid #d8d4c8;
+  background:white;
+  color:var(--green);
+  border-radius:20px;
+  padding:7px 11px;
+  font-size:11px;
+}
+
+.payment-option{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:8px;
+  cursor:pointer;
+}
+
+.payment-option.selected{
+  border:2px solid var(--green);
+  background:#f2f7ee;
+}
+
+.payment-option .radio{
+  width:18px;height:18px;
+  border-radius:50%;
+  border:2px solid #aaa;
+}
+
+.payment-option.selected .radio{
+  border:5px solid var(--green);
+}
+
+.modal-footer{
+  display:flex;
+  gap:9px;
+  padding:0 22px 22px;
+}
+
+.modal-footer .btn{flex:1}
+
+/* SUCCESS */
+
+.success-view{
+  text-align:center;
+  padding:20px 5px 5px;
+}
+
+.success-icon{
+  width:80px;height:80px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  background:#e6f3e7;
+  color:#24775f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+}
+
+.success-view h2{
+  font:700 27px Georgia,serif;
+}
+
+.success-amount{
+  font:700 36px Georgia,serif;
+  margin:12px 0;
+}
+
+.success-view p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* RECEIPT */
+
+.receipt{
+  background:#f8f5eb;
+  border-radius:15px;
+  padding:17px;
+  margin-top:15px;
+}
+
+.receipt-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:9px 0;
+  border-bottom:1px dashed #d9d3c5;
+  font-size:12px;
+}
+
+.receipt-row:last-child{border:0}
+.receipt-row span:first-child{color:var(--muted)}
+.receipt-row span:last-child{text-align:right;font-weight:700}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  top:22px;
+  right:22px;
+  z-index:1000;
+  background:#083f35;
+  color:white;
+  border-radius:13px;
+  padding:13px 18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  transform:translateX(130%);
+  transition:.3s;
+  max-width:330px;
+  font-size:12px;
+}
+
+.toast.show{transform:translateX(0)}
+
+/* MOBILE NAV */
+
+.mobile-nav{display:none}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+  .money-grid,.offer-grid{grid-template-columns:1fr 1fr}
+  .dashboard-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:800px){
+  body{background:#fbf8ee}
+
+  .app{display:block}
+  .sidebar{display:none}
+
+  .main{
+    padding:18px 14px 95px;
+  }
+
+  .greeting h1{font-size:29px}
+
+  .hero{
+    padding:22px;
+    border-radius:19px;
+  }
+
+  .hero h2{font-size:39px}
+
+  .money-grid,.offer-grid,.metric-grid{
+    grid-template-columns:1fr;
+  }
+
+  .money-card{min-height:auto}
+
+  .steps{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .arrow{
+    padding:0;
+    transform:rotate(90deg);
+  }
+
+  .step p{max-width:240px}
+
+  .quick-strip{
+    grid-template-columns:1fr;
+  }
+
+  .quick-strip .btn{width:100%}
+
+  .mobile-nav{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:72px;
+    background:#fffdf7;
+    border-top:1px solid var(--border);
+    z-index:300;
+  }
+
+  .mobile-nav button{
+    border:0;
+    background:transparent;
+    color:#64746e;
+    font-size:10px;
+  }
+
+  .mobile-nav span{
+    display:block;
+    font-size:21px;
+    margin-bottom:3px;
+  }
+
+  .mobile-nav button.active{color:var(--green);font-weight:bold}
+
+  .modal-overlay{
+    align-items:flex-end;
+    padding:0;
+  }
+
+  .modal{
+    width:100%;
+    max-height:92vh;
+    border-radius:24px 24px 0 0;
+  }
+
+  .page-header h1{font-size:26px}
+}
+
+@media(max-width:480px){
+  .top-actions .icon-btn{display:none}
+  .hero h2{font-size:34px}
+  .card-buttons{flex-direction:column}
+  .card-buttons .btn{width:100%}
+  .stats{grid-template-columns:1fr 1fr}
+  .offer-card{min-height:215px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="toast" class="toast"></div>
+
+<div class="app">
+
+<!-- ======================================================
+     SIDEBAR
+====================================================== -->
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logo-icon">S</div>
+    <div>
+      <h2>Samruddhi</h2>
+      <small>Groups</small>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn active" data-page="dashboard">
+      <span class="nav-icon">⌂</span> Dashboard
+    </button>
+
+    <button class="nav-btn" data-page="wallet">
+      <span class="nav-icon">▣</span> Wallet
+    </button>
+
+    <button class="nav-btn" data-page="deposit">
+      <span class="nav-icon">₹</span> Deposits
+    </button>
+
+    <button class="nav-btn" data-page="earnings">
+      <span class="nav-icon">↗</span> Earnings
+    </button>
+
+    <button class="nav-btn" data-page="transactions">
+      <span class="nav-icon">⇄</span> Transactions
+    </button>
+
+    <button class="nav-btn" data-page="offers">
+      <span class="nav-icon">★</span> Offers & Benefits
+    </button>
+
+    <button class="nav-btn" data-page="profile">
+      <span class="nav-icon">○</span> Profile
+    </button>
+  </nav>
+
+  <div class="support">
+    <strong>Samruddhi Support</strong><br>
+    Need help with your wallet or deposit?<br>
+    <span style="color:#d9bd74">Contact Support →</span>
+  </div>
+
+</aside>
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+<main class="main">
+
+<!-- ======================================================
+     DASHBOARD PAGE
+====================================================== -->
+<section class="page active" id="page-dashboard">
+
+  <header class="topbar">
+    <div class="greeting">
+      <small>Good Morning,</small>
+      <h1 id="dashboardName">Ravi</h1>
+      <small>Small steps. Bigger dreams.</small>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" onclick="showToast('No new notifications')">♢</button>
+      <div class="avatar" id="topAvatar">R</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Total Portfolio Value</div>
+    <h2 id="portfolioValue">₹2,00,000</h2>
+    <div class="positive">▲ +4.2% <span style="color:var(--muted);font-weight:400">(Today)</span></div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" onclick="openAddMoney()">+ Add Money</button>
+      <button class="btn btn-secondary" onclick="navigate('deposit')">View Portfolio</button>
+    </div>
+  </section>
+
+  <div class="section-head">
+    <div>
+      <h2>My Money</h2>
+      <p>Manage your wallet, deposit and earnings.</p>
+    </div>
+  </div>
+
+  <div class="money-grid">
+
+    <article class="money-card wallet-card">
+      <div class="circle-icon">👛</div>
+      <h3>Wallet</h3>
+      <div class="big-amount wallet-balance">₹10,000</div>
+      <p class="desc">Rent received from customers is stored in your wallet and is available for withdrawal.</p>
+      <div class="card-buttons">
+        <button class="btn btn-primary" onclick="openWithdraw()">Withdraw</button>
+        <button class="btn btn-secondary" onclick="navigate('wallet')">View Wallet</button>
+      </div>
+    </article>
+
+    <article class="money-card deposit-card">
+      <div class="circle-icon">🏦</div>
+      <h3>Samruddhi Deposit</h3>
+      <div class="big-amount deposit-balance">₹2,00,000</div>
+      <p class="desc">View your active Samruddhi plan, deposit amount and plan information.</p>
+      <div class="card-buttons">
+        <button class="btn btn-primary" onclick="openNewDeposit()">Add Deposit</button>
+        <button class="btn btn-secondary" onclick="navigate('deposit')">View Details</button>
+      </div>
+    </article>
+
+    <article class="money-card earning-card">
+      <div class="circle-icon">🪙</div>
+      <h3>Total Earnings</h3>
+      <div class="big-amount total-earnings">₹10,300</div>
+      <p class="desc">Track the total earnings credited from your Samruddhi plan.</p>
+      <div class="card-buttons">
+        <button class="btn btn-primary" onclick="navigate('earnings')">View Earnings</button>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="section-head">
+    <div>
+      <h2>Your Money Journey</h2>
+      <p>How the wallet and deposit system works.</p>
+    </div>
+  </div>
+
+  <section class="panel journey">
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-icon">🏠</div>
+        <h4>1. Rent Received</h4>
+        <strong>Customer → Wallet</strong>
+        <p>Rent paid by your customer is credited to your Samruddhi wallet.</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step">
+        <div class="step-icon">👛</div>
+        <h4>2. Wallet</h4>
+        <strong class="wallet-balance">₹10,000</strong>
+        <p>Your available rent collection is safely shown in the wallet.</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step">
+        <div class="step-icon">🏦</div>
+        <h4>3. Deposit</h4>
+        <strong>₹2L – ₹10L</strong>
+        <p>Eligible funds can be placed into a Samruddhi deposit plan.</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step">
+        <div class="step-icon">₹</div>
+        <h4>4. Withdraw</h4>
+        <strong>UPI / Bank</strong>
+        <p>Withdraw available wallet money to your linked UPI or bank account.</p>
+      </div>
+
+    </div>
+
+    <div class="quick-strip">
+      <div class="quick-info">
+        <div class="upi">UPI</div>
+        <div>
+          <strong>Wallet → UPI / Bank Account</strong>
+          <p>Withdraw your available balance using your saved payment account.</p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="openWithdraw()">Withdraw Money →</button>
+    </div>
+
+  </section>
+
+  <div class="dashboard-grid">
+
+    <section class="panel">
+      <div class="section-head" style="margin:0 0 8px">
+        <div><h2>Recent Transactions</h2></div>
+        <button class="text-btn" onclick="navigate('transactions')">View All →</button>
+      </div>
+      <div id="recentTransactions" class="transaction-list"></div>
+    </section>
+
+    <section class="panel summary-card">
+      <div class="eyebrow">Current Investment</div>
+      <div class="big-amount deposit-balance">₹2,00,000</div>
+      <p class="desc">Amount currently allocated to your Samruddhi deposit plan.</p>
+
+      <div class="progress">
+        <div id="depositProgress" class="progress-fill"></div>
+      </div>
+
+      <small style="color:var(--muted)">Deposit range ₹2,00,000 – ₹10,00,000</small>
+
+      <div class="stats">
+        <div class="stat">
+          <small>This Month</small>
+          <strong id="monthEarning">₹6,000</strong>
+        </div>
+        <div class="stat">
+          <small>Total Earnings</small>
+          <strong class="total-earnings">₹10,300</strong>
+        </div>
+        <div class="stat">
+          <small>Plan Status</small>
+          <strong>Active</strong>
+        </div>
+        <div class="stat">
+          <small>Next Credit</small>
+          <strong>01 Oct</strong>
+        </div>
+      </div>
+
+      <button class="btn btn-primary full" onclick="navigate('deposit')">View Deposit Details</button>
+    </section>
+
+  </div>
+
+  <div class="section-head">
+    <div>
+      <h2>Offers & Benefits</h2>
+      <p>Explore available promotional benefits.</p>
+    </div>
+    <button class="text-btn" onclick="navigate('offers')">View All →</button>
+  </div>
+
+  <div class="offer-grid">
+
+    <article class="offer-card blue">
+      <span class="badge">INVEST & EXPLORE</span>
+      <h3>International Trip</h3>
+      <p>Explore the promotional travel benefit and eligibility information.</p>
+      <button class="btn btn-primary" onclick="openOffer('trip')">Explore →</button>
+      <div class="offer-art">✈</div>
+    </article>
+
+    <article class="offer-card green">
+      <span class="badge">REFER & EARN</span>
+      <h3>Referral Bonus</h3>
+      <p>Share your referral code with friends and family.</p>
+      <button class="btn btn-primary" onclick="openOffer('refer')">Refer Now →</button>
+      <div class="offer-art">🎁</div>
+    </article>
+
+    <article class="offer-card gold">
+      <span class="badge">SPECIAL OFFER</span>
+      <h3>Seasonal Offer</h3>
+      <p>View limited-period promotional benefits for eligible deposits.</p>
+      <button class="btn btn-primary" onclick="openOffer('seasonal')">View Offer →</button>
+      <div class="offer-art">✦</div>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ======================================================
+     WALLET PAGE
+====================================================== -->
+<section class="page" id="page-wallet">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>My Wallet</h1>
+      <p>Rent collections and available wallet balance.</p>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Available Wallet Balance</div>
+    <h2 class="wallet-balance">₹10,000</h2>
+    <div class="action-row">
+      <button class="btn btn-primary" onclick="openAddMoney()">+ Add Money</button>
+      <button class="btn btn-secondary" onclick="openWithdraw()">Withdraw</button>
+    </div>
+  </section>
+
+  <div class="dashboard-grid">
+
+    <section class="panel">
+      <h2 style="font-family:Georgia,serif">How your wallet works</h2>
+
+      <div style="margin-top:20px">
+        <div class="setting">
+          <div>
+            <strong>1. Customer pays rent</strong>
+            <div class="tx-meta">Rent payment is received.</div>
+          </div>
+          <span>🏠</span>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>2. Money enters wallet</strong>
+            <div class="tx-meta">The rent amount appears in your available balance.</div>
+          </div>
+          <span>👛</span>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>3. Withdraw when required</strong>
+            <div class="tx-meta">Choose UPI or linked bank account.</div>
+          </div>
+          <span>UPI</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 style="font-family:Georgia,serif">Linked Account</h2>
+
+      <div class="payment-option selected" style="margin-top:18px">
+        <div class="radio"></div>
+        <div>
+          <strong>UPI</strong>
+          <div class="tx-meta">ravi@upi</div>
+        </div>
+      </div>
+
+      <div class="payment-option">
+        <div class="radio"></div>
+        <div>
+          <strong>HDFC Bank</strong>
+          <div class="tx-meta">Account ending ••4821</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary full" style="margin-top:12px" onclick="openWithdraw()">Withdraw to Account</button>
+    </section>
+
+  </div>
+
+</section>
+
+<!-- ======================================================
+     DEPOSIT PAGE
+====================================================== -->
+<section class="page" id="page-deposit">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>Deposit Details</h1>
+      <p>Your active Samruddhi deposit plan.</p>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Total Deposited</div>
+    <h2 class="deposit-balance">₹2,00,000</h2>
+    <div class="positive">● Active Plan</div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" onclick="openNewDeposit()">Add New Deposit</button>
+      <button class="btn btn-secondary" onclick="navigate('earnings')">View Earnings</button>
+    </div>
+  </section>
+
+  <div class="section-head">
+    <div>
+      <h2>Plan Information</h2>
+      <p>Demo plan details.</p>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+
+    <div class="metric">
+      <small>Deposit Amount</small>
+      <h3 class="deposit-balance">₹2,00,000</h3>
+    </div>
+
+    <div class="metric highlight">
+      <small>Monthly Earnings</small>
+      <h3 id="depositMonthly">₹6,000</h3>
+    </div>
+
+    <div class="metric">
+      <small>Plan Status</small>
+      <h3 style="font-size:24px">Active</h3>
+    </div>
+
+  </div>
+
+  <section class="panel" style="margin-top:20px">
+    <h2 style="font-family:Georgia,serif">Deposit Journey</h2>
+
+    <div class="settings-list">
+      <div class="setting">
+        <span>Deposit range</span>
+        <strong>₹2 Lakh – ₹10 Lakh</strong>
+      </div>
+      <div class="setting">
+        <span>Start date</span>
+        <strong>25 Sep 2026</strong>
+      </div>
+      <div class="setting">
+        <span>Earnings</span>
+        <strong>Plan dependent</strong>
+      </div>
+      <div class="setting">
+        <span>Next credit</span>
+        <strong>01 Oct 2026</strong>
+      </div>
+      <div class="setting">
+        <span>Status</span>
+        <strong style="color:#24805f">Active</strong>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ======================================================
+     EARNINGS PAGE
+====================================================== -->
+<section class="page" id="page-earnings">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>Earnings</h1>
+      <p>Track earnings generated from your deposit.</p>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+
+    <div class="metric highlight">
+      <small>Total Earnings</small>
+      <h3 class="total-earnings">₹10,300</h3>
+    </div>
+
+    <div class="metric">
+      <small>This Month</small>
+      <h3>₹6,000</h3>
+    </div>
+
+    <div class="metric">
+      <small>YTD</small>
+      <h3>₹10,300</h3>
+    </div>
+
+  </div>
+
+  <section class="panel" style="margin-top:20px">
+    <div class="section-head" style="margin:0">
+      <div><h2>Earnings History</h2></div>
+    </div>
+
+    <div id="earningTransactions" class="transaction-list"></div>
+  </section>
+
+</section>
+
+<!-- ======================================================
+     TRANSACTIONS PAGE
+====================================================== -->
+<section class="page" id="page-transactions">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>Transaction History</h1>
+      <p>All wallet, rent, deposit, earning and withdrawal activity.</p>
+    </div>
+  </div>
+
+  <section class="panel">
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterTransactions('all',this)">All</button>
+      <button class="filter-btn" onclick="filterTransactions('rent',this)">Rent</button>
+      <button class="filter-btn" onclick="filterTransactions('wallet',this)">Wallet</button>
+      <button class="filter-btn" onclick="filterTransactions('deposit',this)">Deposit</button>
+      <button class="filter-btn" onclick="filterTransactions('earning',this)">Earnings</button>
+      <button class="filter-btn" onclick="filterTransactions('withdrawal',this)">Withdrawals</button>
+    </div>
+
+    <div id="allTransactions" class="transaction-list"></div>
+
+  </section>
+
+</section>
+
+<!-- ======================================================
+     OFFERS PAGE
+====================================================== -->
+<section class="page" id="page-offers">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>Offers & Benefits</h1>
+      <p>Explore promotional benefits and rewards.</p>
+    </div>
+  </div>
+
+  <div class="offer-grid">
+
+    <article class="offer-card blue">
+      <span class="badge">INVEST & EXPLORE</span>
+      <h3>International Trip</h3>
+      <p>Explore available travel-related promotional benefits and eligibility.</p>
+      <button class="btn btn-primary" onclick="openOffer('trip')">Explore →</button>
+      <div class="offer-art">✈</div>
+    </article>
+
+    <article class="offer-card green">
+      <span class="badge">REFER & EARN</span>
+      <h3>Referral Bonus</h3>
+      <p>Introduce your friends and family using your referral code.</p>
+      <button class="btn btn-primary" onclick="openOffer('refer')">Refer Now →</button>
+      <div class="offer-art">🎁</div>
+    </article>
+
+    <article class="offer-card gold">
+      <span class="badge">SPECIAL OFFER</span>
+      <h3>Seasonal Offer</h3>
+      <p>View limited-period promotional information for eligible deposits.</p>
+      <button class="btn btn-primary" onclick="openOffer('seasonal')">View Offer →</button>
+      <div class="offer-art">✦</div>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ======================================================
+     PROFILE PAGE
+====================================================== -->
+<section class="page" id="page-profile">
+
+  <div class="page-header">
+    <button class="back" onclick="navigate('dashboard')">←</button>
+    <div>
+      <h1>Profile</h1>
+      <p>Manage personal and payment information.</p>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+
+    <section class="panel profile-card">
+      <div class="large-avatar" id="profileAvatar">R</div>
+      <h2 id="profileName">Ravi Kumar</h2>
+      <p style="color:var(--muted);margin-top:4px">ravi@example.com</p>
+      <span class="verified">✓ KYC Verified</span>
+
+      <button class="btn btn-secondary" style="margin-top:18px" onclick="openEditProfile()">Edit Profile</button>
+    </section>
+
+    <section class="panel">
+      <h2 style="font-family:Georgia,serif">Account Settings</h2>
+
+      <div class="settings-list">
+
+        <div class="setting">
+          <div>
+            <strong>Mobile Number</strong>
+            <div class="tx-meta">+91 98765 43210</div>
+          </div>
+          <span>›</span>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>UPI Account</strong>
+            <div class="tx-meta">ravi@upi</div>
+          </div>
+          <span>›</span>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>Bank Account</strong>
+            <div class="tx-meta">HDFC •••• 4821</div>
+          </div>
+          <span>›</span>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>KYC</strong>
+            <div class="tx-meta">Verified</div>
+          </div>
+          <strong style="color:#24805f">✓</strong>
+        </div>
+
+        <div class="setting">
+          <div>
+            <strong>Help & Support</strong>
+            <div class="tx-meta">Get assistance with your account.</div>
+          </div>
+          <button class="text-btn" onclick="showToast('Support request opened (Demo)')">Open</button>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</section>
+
+</main>
+</div>
+
+<!-- ======================================================
+     MOBILE NAVIGATION
+====================================================== -->
+<nav class="mobile-nav">
+
+  <button class="mobile-nav-btn active" data-page="dashboard">
+    <span>⌂</span>
+    Home
+  </button>
+
+  <button class="mobile-nav-btn" data-page="deposit">
+    <span>◔</span>
+    Portfolio
+  </button>
+
+  <button class="mobile-nav-btn" data-page="transactions">
+    <span>⇄</span>
+    Transactions
+  </button>
+
+  <button class="mobile-nav-btn" data-page="profile">
+    <span>♙</span>
+    Profile
+  </button>
+
+</nav>
+
+<!-- ======================================================
+     MODAL
+====================================================== -->
+<div id="modalOverlay" class="modal-overlay hidden" onclick="overlayClick(event)">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h2 id="modalTitle">Title</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <div id="modalBody" class="modal-body"></div>
+
+    <div id="modalFooter" class="modal-footer"></div>
+
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA / STATE
+========================================================= */
+
+const defaultState = {
+  user:{
+    name:"Ravi Kumar",
+    firstName:"Ravi",
+    email:"ravi@example.com"
+  },
+
+  wallet:10000,
+  deposit:200000,
+  earnings:10300,
+  monthlyEarnings:6000,
+
+  transactions:[
+    {
+      id:"TXN1005",
+      type:"rent",
+      title:"Rent Received",
+      amount:10000,
+      direction:"credit",
+      date:"27 Sep 2026",
+      status:"Successful",
+      detail:"Rent credited to Samruddhi wallet"
+    },
+    {
+      id:"TXN1004",
+      type:"deposit",
+      title:"Samruddhi Deposit",
+      amount:200000,
+      direction:"debit",
+      date:"25 Sep 2026",
+      status:"Successful",
+      detail:"Samruddhi deposit plan"
+    },
+    {
+      id:"TXN1003",
+      type:"earning",
+      title:"Monthly Earnings",
+      amount:6000,
+      direction:"credit",
+      date:"01 Sep 2026",
+      status:"Credited",
+      detail:"Monthly deposit earnings"
+    },
+    {
+      id:"TXN1002",
+      type:"withdrawal",
+      title:"UPI Withdrawal",
+      amount:5000,
+      direction:"debit",
+      date:"28 Aug 2026",
+      status:"Completed",
+      detail:"Transferred to ravi@upi"
+    },
+    {
+      id:"TXN1001",
+      type:"rent",
+      title:"Rent Received",
+      amount:12000,
+      direction:"credit",
+      date:"26 Aug 2026",
+      status:"Successful",
+      detail:"Rent credited to Samruddhi wallet"
+    }
+  ]
+};
+
+let state = loadState();
+
+function loadState(){
+  const saved = localStorage.getItem("samruddhiDemoState");
+  if(saved){
+    try{
+      return JSON.parse(saved);
+    }catch(e){}
+  }
+  return JSON.parse(JSON.stringify(defaultState));
+}
+
+function saveState(){
+  localStorage.setItem("samruddhiDemoState",JSON.stringify(state));
+}
+
+function formatMoney(n){
+  return Number(n).toLocaleString("en-IN");
+}
+
+function currentDate(){
+  return new Date().toLocaleDateString("en-IN",{
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+  });
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function navigate(page){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const target=document.getElementById("page-"+page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.page===page);
+  });
+
+  document.querySelectorAll(".mobile-nav-btn").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.page===page);
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  render();
+}
+
+document.querySelectorAll("[data-page]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    navigate(btn.dataset.page);
+  });
+});
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+  document.querySelectorAll(".wallet-balance").forEach(el=>{
+    el.textContent="₹"+formatMoney(state.wallet);
+  });
+
+  document.querySelectorAll(".deposit-balance").forEach(el=>{
+    el.textContent="₹"+formatMoney(state.deposit);
+  });
+
+  document.querySelectorAll(".total-earnings").forEach(el=>{
+    el.textContent="₹"+formatMoney(state.earnings);
+  });
+
+  document.getElementById("dashboardName").textContent=state.user.firstName;
+  document.getElementById("profileName").textContent=state.user.name;
+
+  document.getElementById("topAvatar").textContent=
+    state.user.firstName.charAt(0).toUpperCase();
+
+  document.getElementById("profileAvatar").textContent=
+    state.user.firstName.charAt(0).toUpperCase();
+
+  document.getElementById("portfolioValue").textContent=
+    "₹"+formatMoney(state.deposit);
+
+  let progress=Math.min((state.deposit/1000000)*100,100);
+  document.getElementById("depositProgress").style.width=progress+"%";
+
+  renderTransactions();
+}
+
+function transactionIcon(type){
+
+  const icons={
+    rent:"🏠",
+    wallet:"👛",
+    deposit:"🏦",
+    earning:"🪙",
+    withdrawal:"↗"
+  };
+
+  return icons[type] || "₹";
+}
+
+function transactionHTML(tx){
+
+  const sign=tx.direction==="credit"?"+":"-";
+
+  return `
+    <div class="transaction-item" onclick="openTransaction('${tx.id}')">
+
+      <div class="tx-icon">
+        ${transactionIcon(tx.type)}
+      </div>
+
+      <div>
+        <div class="tx-title">${tx.title}</div>
+        <div class="tx-meta">${tx.date} • ${tx.id}</div>
+      </div>
+
+      <div class="tx-amount ${tx.direction}">
+        ${sign} ₹${formatMoney(tx.amount)}
+        <span class="tx-status">${tx.status}</span>
+      </div>
+
+    </div>
+  `;
+}
+
+function renderTransactions(){
+
+  const recent=document.getElementById("recentTransactions");
+
+  if(recent){
+    recent.innerHTML=state.transactions
+      .slice(0,5)
+      .map(transactionHTML)
+      .join("");
+  }
+
+  const all=document.getElementById("allTransactions");
+
+  if(all){
+    all.innerHTML=state.transactions
+      .map(transactionHTML)
+      .join("");
+  }
+
+  const earning=document.getElementById("earningTransactions");
+
+  if(earning){
+    const list=state.transactions.filter(t=>t.type==="earning");
+
+    earning.innerHTML=list.length
+      ?list.map(transactionHTML).join("")
+      :`<p style="color:var(--muted);padding:20px 0">No earnings transactions yet.</p>`;
+  }
+}
+
+/* =========================================================
+   MODAL HELPERS
+========================================================= */
+
+function openModal(title,body,footer=""){
+
+  document.getElementById("modalTitle").textContent=title;
+  document.getElementById("modalBody").innerHTML=body;
+  document.getElementById("modalFooter").innerHTML=footer;
+
+  document.getElementById("modalOverlay").classList.remove("hidden");
+
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(){
+  document.getElementById("modalOverlay").classList.add("hidden");
+  document.body.style.overflow="";
+}
+
+function overlayClick(e){
+  if(e.target.id==="modalOverlay"){
+    closeModal();
+  }
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") closeModal();
+});
+
+/* =========================================================
+   ADD MONEY
+========================================================= */
+
+function openAddMoney(){
+
+  openModal(
+    "Add Money",
+    `
+      <div class="balance-box">
+        <small>Current wallet balance</small>
+        <strong>₹${formatMoney(state.wallet)}</strong>
+      </div>
+
+      <div class="form-group">
+        <label>Enter amount</label>
+
+        <div class="input-wrap">
+          <span>₹</span>
+          <input
+            id="addAmount"
+            type="number"
+            min="1"
+            placeholder="Enter amount">
+        </div>
+
+        <div class="quick-amounts">
+          <button onclick="setAmount('addAmount',1000)">₹1,000</button>
+          <button onclick="setAmount('addAmount',5000)">₹5,000</button>
+          <button onclick="setAmount('addAmount',10000)">₹10,000</button>
+          <button onclick="setAmount('addAmount',25000)">₹25,000</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Payment Method</label>
+
+        <div class="payment-option selected">
+          <div class="radio"></div>
+          <div>
+            <strong>UPI</strong>
+            <div class="tx-meta">ravi@upi</div>
+          </div>
+        </div>
+
+        <div class="payment-option">
+          <div class="radio"></div>
+          <div>
+            <strong>HDFC Bank</strong>
+            <div class="tx-meta">Account ending ••4821</div>
+          </div>
+        </div>
+      </div>
+    `,
+    `
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="processAddMoney()">Proceed →</button>
+    `
+  );
+
+  activatePaymentOptions();
+}
+
+function setAmount(id,value){
+  document.getElementById(id).value=value;
+}
+
+function processAddMoney(){
+
+  const input=document.getElementById("addAmount");
+  const amount=Number(input.value);
+
+  if(!amount || amount<=0){
+    showToast("Please enter a valid amount.");
+    return;
+  }
+
+  state.wallet+=amount;
+
+  state.transactions.unshift({
+    id:"TXN"+Date.now().toString().slice(-7),
+    type:"wallet",
+    title:"Money Added to Wallet",
+    amount:amount,
+    direction:"credit",
+    date:currentDate(),
+    status:"Successful",
+    detail:"Added using demo UPI payment"
+  });
+
+  saveState();
+  render();
+
+  showSuccess(
+    "Money Added Successfully",
+    amount,
+    "Your demo wallet balance has been updated."
+  );
+}
+
+/* =========================================================
+   WITHDRAW
+========================================================= */
+
+function openWithdraw(){
+
+  openModal(
+    "Withdraw Money",
+    `
+      <div class="balance-box">
+        <small>Available wallet balance</small>
+        <strong>₹${formatMoney(state.wallet)}</strong>
+      </div>
+
+      <div class="form-group">
+        <label>Withdrawal amount</label>
+
+        <div class="input-wrap">
+          <span>₹</span>
+          <input
+            id="withdrawAmount"
+            type="number"
+            min="1"
+            max="${state.wallet}"
+            placeholder="Enter amount">
+        </div>
+
+        <div class="quick-amounts">
+          <button onclick="setAmount('withdrawAmount',1000)">₹1,000</button>
+          <button onclick="setAmount('withdrawAmount',5000)">₹5,000</button>
+          <button onclick="setAmount('withdrawAmount',${state.wallet})">Withdraw All</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Withdraw to</label>
+
+        <div class="payment-option selected" data-account="ravi@upi">
+          <div class="radio"></div>
+          <div>
+            <strong>UPI</strong>
+            <div class="tx-meta">ravi@upi</div>
+          </div>
+        </div>
+
+        <div class="payment-option" data-account="HDFC Bank ••4821">
+          <div class="radio"></div>
+          <div>
+            <strong>HDFC Bank</strong>
+            <div class="tx-meta">Account ending ••4821</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:10px;color:var(--muted);line-height:1.5">
+        This is a demo withdrawal. No actual UPI or bank transfer will occur.
+      </p>
+    `,
+    `
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="processWithdraw()">Withdraw →</button>
+    `
+  );
+
+  activatePaymentOptions();
+}
+
+function processWithdraw(){
+
+  const amount=Number(document.getElementById("withdrawAmount").value);
+
+  if(!amount || amount<=0){
+    showToast("Enter a valid withdrawal amount.");
+    return;
+  }
+
+  if(amount>state.wallet){
+    showToast("Insufficient wallet balance.");
+    return;
+  }
+
+  const selected=document.querySelector(
+    "#modalBody .payment-option.selected"
+  );
+
+  const account=selected?.dataset.account || "ravi@upi";
+
+  state.wallet-=amount;
+
+  state.transactions.unshift({
+    id:"TXN"+Date.now().toString().slice(-7),
+    type:"withdrawal",
+    title:"Wallet Withdrawal",
+    amount:amount,
+    direction:"debit",
+    date:currentDate(),
+    status:"Completed",
+    detail:"Transferred to "+account
+  });
+
+  saveState();
+  render();
+
+  showSuccess(
+    "Withdrawal Successful",
+    amount,
+    "Demo transfer completed to "+account+"."
+  );
+}
+
+/* =========================================================
+   DEPOSIT
+========================================================= */
+
+function openNewDeposit(){
+
+  openModal(
+    "New Samruddhi Deposit",
+    `
+      <div class="balance-box">
+        <small>Current deposit</small>
+        <strong>₹${formatMoney(state.deposit)}</strong>
+      </div>
+
+      <div class="form-group">
+        <label>Deposit Amount</label>
+
+        <div class="input-wrap">
+          <span>₹</span>
+          <input
+            id="depositAmount"
+            type="number"
+            min="200000"
+            max="1000000"
+            placeholder="₹2,00,000 – ₹10,00,000">
+        </div>
+
+        <div class="quick-amounts">
+          <button onclick="setAmount('depositAmount',200000)">₹2 Lakh</button>
+          <button onclick="setAmount('depositAmount',500000)">₹5 Lakh</button>
+          <button onclick="setAmount('depositAmount',1000000)">₹10 Lakh</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Funding Method</label>
+
+        <select id="depositMethod">
+          <option>UPI / Bank Payment</option>
+          <option>Wallet Balance</option>
+        </select>
+      </div>
+
+      <div class="balance-box">
+        <small>Demo Plan</small>
+        <div style="margin-top:8px;font-size:12px;line-height:1.6">
+          Minimum deposit: <strong>₹2,00,000</strong><br>
+          Maximum deposit: <strong>₹10,00,000</strong><br>
+          Earnings: <strong>According to applicable plan terms</strong>
+        </div>
+      </div>
+
+      <p style="font-size:10px;color:var(--muted)">
+        The amounts and plan information in this prototype are for UI demonstration only.
+      </p>
+    `,
+    `
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="processDeposit()">Confirm Deposit →</button>
+    `
+  );
+}
+
+function processDeposit(){
+
+  const amount=Number(document.getElementById("depositAmount").value);
+  const method=document.getElementById("depositMethod").value;
+
+  if(!amount || amount<200000 || amount>1000000){
+    showToast("Deposit must be between ₹2 Lakh and ₹10 Lakh.");
+    return;
+  }
+
+  if(method==="Wallet Balance"){
+
+    if(amount>state.wallet){
+      showToast("Your wallet does not have enough balance for this deposit.");
+      return;
+    }
+
+    state.wallet-=amount;
+  }
+
+  state.deposit+=amount;
+
+  state.transactions.unshift({
+    id:"TXN"+Date.now().toString().slice(-7),
+    type:"deposit",
+    title:"Samruddhi Deposit",
+    amount:amount,
+    direction:"debit",
+    date:currentDate(),
+    status:"Successful",
+    detail:"Deposit funded using "+method
+  });
+
+  saveState();
+  render();
+
+  showSuccess(
+    "Deposit Successful",
+    amount,
+    "Your demo Samruddhi deposit has been updated."
+  );
+}
+
+/* =========================================================
+   TRANSACTION FILTER
+========================================================= */
+
+function filterTransactions(type,button){
+
+  document.querySelectorAll(".filter-btn").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  const list=
+    type==="all"
+      ?state.transactions
+      :state.transactions.filter(tx=>tx.type===type);
+
+  const container=document.getElementById("allTransactions");
+
+  if(!list.length){
+    container.innerHTML=`
+      <div style="padding:35px;text-align:center;color:var(--muted)">
+        No transactions found.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML=list.map(transactionHTML).join("");
+}
+
+/* =========================================================
+   TRANSACTION RECEIPT
+========================================================= */
+
+function openTransaction(id){
+
+  const tx=state.transactions.find(t=>t.id===id);
+
+  if(!tx) return;
+
+  const sign=tx.direction==="credit"?"+":"-";
+
+  openModal(
+    "Transaction Details",
+    `
+      <div class="success-view">
+
+        <div class="success-icon">
+          ${transactionIcon(tx.type)}
+        </div>
+
+        <h2>${tx.title}</h2>
+
+        <div class="success-amount ${tx.direction}">
+          ${sign} ₹${formatMoney(tx.amount)}
+        </div>
+
+        <span class="verified">${tx.status}</span>
+
+      </div>
+
+      <div class="receipt">
+
+        <div class="receipt-row">
+          <span>Transaction ID</span>
+          <span>${tx.id}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Date</span>
+          <span>${tx.date}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Type</span>
+          <span>${tx.title}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Status</span>
+          <span>${tx.status}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span>Description</span>
+          <span>${tx.detail || "-"}</span>
+        </div>
+
+      </div>
+    `,
+    `
+      <button class="btn btn-primary full" onclick="closeModal()">Done</button>
+    `
+  );
+}
+
+/* =========================================================
+   OFFERS
+========================================================= */
+
+function openOffer(type){
+
+  if(type==="trip"){
+
+    openModal(
+      "International Trip",
+      `
+        <div style="text-align:center;font-size:80px;margin:5px 0 15px">✈</div>
+
+        <h2 style="font:700 27px Georgia,serif;text-align:center">
+          Explore the World
+        </h2>
+
+        <p style="color:var(--muted);text-align:center;line-height:1.6;margin-top:8px">
+          Promotional travel benefits may be available to eligible participants
+          according to the applicable offer terms.
+        </p>
+
+        <div class="receipt">
+          <div class="receipt-row">
+            <span>Offer</span>
+            <span>International Trip</span>
+          </div>
+          <div class="receipt-row">
+            <span>Eligibility</span>
+            <span>Subject to offer terms</span>
+          </div>
+          <div class="receipt-row">
+            <span>Status</span>
+            <span>Explore</span>
+          </div>
+        </div>
+      `,
+      `
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="showToast('Interest registered for demo');closeModal()">I'm Interested</button>
+      `
+    );
+
+  }
+
+  if(type==="refer"){
+
+    openModal(
+      "Refer & Earn",
+      `
+        <div style="text-align:center;font-size:75px;margin-bottom:12px">🎁</div>
+
+        <h2 style="font:700 26px Georgia,serif;text-align:center">
+          Invite Friends & Family
+        </h2>
+
+        <p style="text-align:center;color:var(--muted);font-size:12px;margin:8px 0 20px">
+          Share your demo referral code.
+        </p>
+
+        <div class="balance-box" style="text-align:center">
+          <small>Your Referral Code</small>
+          <strong style="letter-spacing:3px">SAMRUDDHI25</strong>
+        </div>
+
+        <button class="btn btn-secondary full" onclick="copyReferral()">
+          Copy Referral Code
+        </button>
+      `,
+      `
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="shareReferral()">Share Referral →</button>
+      `
+    );
+
+  }
+
+  if(type==="seasonal"){
+
+    openModal(
+      "Seasonal Offer",
+      `
+        <div style="text-align:center;font-size:75px;margin-bottom:12px">✦</div>
+
+        <h2 style="font:700 27px Georgia,serif;text-align:center">
+          Special Seasonal Benefit
+        </h2>
+
+        <p style="text-align:center;color:var(--muted);line-height:1.6;margin-top:8px">
+          View the promotional benefit available for qualifying investments
+          during the applicable campaign period.
+        </p>
+
+        <div class="receipt">
+          <div class="receipt-row">
+            <span>Investment</span>
+            <span>Subject to campaign terms</span>
+          </div>
+
+          <div class="receipt-row">
+            <span>Benefit</span>
+            <span>See final offer terms</span>
+          </div>
+        </div>
+
+        <p style="font-size:10px;color:var(--muted);margin-top:13px">
+          Demo content only. Replace this section with the approved Samruddhi offer terms before production.
+        </p>
+      `,
+      `
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="navigate('deposit');closeModal()">View Deposit →</button>
+      `
+    );
+
+  }
+}
+
+/* =========================================================
+   REFERRAL
+========================================================= */
+
+function copyReferral(){
+
+  const code="SAMRUDDHI25";
+
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(code);
+  }
+
+  showToast("Referral code copied: "+code);
+}
+
+function shareReferral(){
+
+  const text="Join Samruddhi Groups using referral code SAMRUDDHI25";
+
+  if(navigator.share){
+    navigator.share({
+      title:"Samruddhi Groups",
+      text:text
+    }).catch(()=>{});
+  }else{
+    copyReferral();
+  }
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openEditProfile(){
+
+  openModal(
+    "Edit Profile",
+    `
+      <div class="form-group">
+        <label>Full Name</label>
+        <input id="editName" value="${state.user.name}">
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input id="editEmail" value="${state.user.email}">
+      </div>
+
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input value="+91 98765 43210" disabled>
+      </div>
+    `,
+    `
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+    `
+  );
+}
+
+function saveProfile(){
+
+  const name=document.getElementById("editName").value.trim();
+  const email=document.getElementById("editEmail").value.trim();
+
+  if(!name){
+    showToast("Please enter your name.");
+    return;
+  }
+
+  state.user.name=name;
+  state.user.firstName=name.split(" ")[0];
+  state.user.email=email;
+
+  saveState();
+  render();
+  closeModal();
+
+  showToast("Profile updated successfully.");
+}
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+function showSuccess(title,amount,message){
+
+  openModal(
+    "Success",
+    `
+      <div class="success-view">
+
+        <div class="success-icon">✓</div>
+
+        <h2>${title}</h2>
+
+        <div class="success-amount">
+          ₹${formatMoney(amount)}
+        </div>
+
+        <p>${message}</p>
+
+        <div class="receipt">
+
+          <div class="receipt-row">
+            <span>Status</span>
+            <span style="color:#24805f">Successful</span>
+          </div>
+
+          <div class="receipt-row">
+            <span>Date</span>
+            <span>${currentDate()}</span>
+          </div>
+
+          <div class="receipt-row">
+            <span>Reference</span>
+            <span>SR${Date.now().toString().slice(-8)}</span>
+          </div>
+
+        </div>
+
+      </div>
+    `,
+    `
+      <button class="btn btn-primary full" onclick="closeModal()">Done</button>
+    `
+  );
+}
+
+/* =========================================================
+   PAYMENT OPTION SELECTION
+========================================================= */
+
+function activatePaymentOptions(){
+
+  document.querySelectorAll("#modalBody .payment-option").forEach(option=>{
+
+    option.addEventListener("click",()=>{
+
+      document.querySelectorAll("#modalBody .payment-option").forEach(o=>{
+        o.classList.remove("selected");
+      });
+
+      option.classList.add("selected");
+
+    });
+
+  });
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },2800);
+}
+
+/* =========================================================
+   DEMO RESET
+   Run resetDemo() from browser console if required.
+========================================================= */
+
+function resetDemo(){
+
+  localStorage.removeItem("samruddhiDemoState");
+
+  state=JSON.parse(JSON.stringify(defaultState));
+
+  saveState();
+  render();
+  navigate("dashboard");
+
+  showToast("Demo data reset.");
+}
+
+/* INITIAL RENDER */
+
+render();
+</script>
+
+</body>
+</html>
